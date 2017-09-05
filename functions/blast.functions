@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+## BLAST functions
+function mkblastdb { makeblastdb -in $1 -parse_seqids -dbtype nucl -logfile $1.blastdb.log; }
+function mkblastdbprot { makeblastdb -in $1 -parse_seqids -dbtype prot -logfile $1.blastdb.log; }
+function blastcheck { if [ ! -f $1.nhr ]; then echo "Blast nucleotide dabatase file $1 not found!
+                                                     ----> creating blast dabatase now ...  " && mkblastdb $1; fi ;}
+function blastcheckprot { if [ ! -f $1.nhr ]; then echo "Blast protein dabatase file $1 not found!
+                                                     ----> creating blast dabatase now ...  " && mkblastdb $1; fi ;}
+function blast

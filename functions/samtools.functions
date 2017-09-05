@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+function 7bampairfilter { samtools view -f 0x2 -F 0x800 - ;}
+function 7bampairfilterbam { samtools view -f 0x2 -F 0x800 - | samtools view -b - ;}
+function 7bamuniqmapfilter { samtools view -h -q 1 -F 4 -F 256 $1 | grep -v XA:Z | grep -v SA:Z ;}
+function 7bamuniqmapfilterbam { samtools view -h -q 1 -F 4 -F 256 $1 | grep -v XA:Z | grep -v SA:Z | samtools view -b - >$1.uniq.bam ;}
+function 7bamdeduplicatereads { samtools view -h $1 | awk '!seen[$10]++' ;}
+
+

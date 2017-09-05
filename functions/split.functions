@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+function fastq.split.1M {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: fastq.split.1M <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f $1 ] ; then
+        mkdir $1_splits #&& cd $1_splits
+        case $1 in
+          *.fastq.gz)   pigz -p 28 -cd $1 | split - -l 40000 ./$1_splits/$1_part. ;;
+          *.fq.gz)      pigz -p 28 -cd $1 | split - -l 40000 ./$1_splits/$1_part. ;;
+          *.fastq)      cat $1 | split - -l 40000 ./$1_splits/$1_part. ;;
+          *.fq)         cat $1 | split - -l 40000 ./$1_splits/$1_part. ;;
+          *)            echo "fastq.split.1M: '$1' - unknown sequence format, recognized sequence formats: *.fastq.gz *.fq.gz *.fastq *.fq" ;;
+        esac
+    else
+        echo "$1 - file does not exist"
+    fi
+fi
+}
+

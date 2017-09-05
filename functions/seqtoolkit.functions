@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+function 2fastacount    { cat $1 | grep ">" | wc -l ;}
+function 2fastqcount    { cat $1 | echo $((`wc -l`/4)) ;}
+function 7uppercase     { seqtk seq -U -l 0 - ;}
+function 7onelinefasta  { seqtk seq -l 0 - ;}
+function 7fastq2fasta   { seqtk seq -A -l 0 - ;}
+function 7renamefasta   { FNAME=$1 && awk '/^>/{$0=">$FNAME"++i}1' ;}
+function 7fastq_Q33_force { paste - - - - | awk 'BEGIN {FS="\t"}; { gsub("[[:alnum:]]","2",$4); gsub("[[:punct:]]","2",$4); print $1"\n"$2"\n"$3"\n"$4}' | seqtk seq -U ;}
+function 7fastqpaste    { paste - - - - ;}
+function 2fasta2phyml
+
+
+# awk 'NR%4==2{sum+=length($0)}END{print sum/(NR/4)}'

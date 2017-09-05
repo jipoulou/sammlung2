@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#requiers genometools
+
+## location of .hmms to classify/select candidate LTR
+HMMS=/local/GyDB_collection/profiles/all.hmms
+
+function 7LTRharvest {  FNAME=$1
+		                gt suffixerator -db $FNAME -indexname $FNAME -tis -suf -lcp -des -sds -dna &&
+		                gt ltrharvest -index $FNAME --gff3 $FNAME.gff -outinner $FNAME.inner -out $FNAME.ltr >$FNAME.ltrharvest.log &&
+		                gt gff3 -sort $FNAME.gff > $FNAME.sorted.gff &&
+		                gt ltrdigest -hmms $HMMS -outfileprefix $FNAME $FNAME.sorted.gff $FNAME ;}
