@@ -2,6 +2,8 @@
 
 FNAME=$1
 #(readlink -f $1)
+# uses sickle to trim sequences according to quality threshold
+
 
 source $FUNCTIONS/open.functions
 
